@@ -1,31 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bouncer Bee - Your Event, Our Protection</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <div class="container text-center">
-      <div class="row text-center " style="padding-top: 50px;">
-        <img
-          src="assets/BouncerBee.gif"
-          style="border: none !important; width: 500px; margin: auto; padding-top: 10rem !important;"
-        />
-        <h1 style="text-transform:uppercase; font-size: 4rem; font-style: bold;">Bouncer Bee</h1>
-        <h2>Coming soon....</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imaya Interiors — Your Dreams, Our Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #f2f5f4;
+      --sand: #dce8e4;
+      --clay: #7fafa3;
+      --charcoal: #1e2d2b;
+      --warm-gray: #6b8882;
+      --accent: #4a9089;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3rem;
+      background: transparent;
+      transition: background .4s;
+    }
+    nav.scrolled { background: var(--accent); backdrop-filter: none; }
+    nav.scrolled .nav-logo,
+    nav.scrolled .nav-links a { color: var(--cream); opacity: 1; }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 600; letter-spacing: .06em;
+      color: var(--accent); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none; opacity: .85;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero { height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+    .hero-left { position: relative; overflow: hidden; }
+    .hero-left img {
+      width: 100%; height: 100%; object-fit: cover;
+      animation: zoomOut 1.6s cubic-bezier(.22,.61,.36,1) forwards;
+    }
+    @keyframes zoomOut {
+      from { transform: scale(1.12); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-right {
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 5rem 4rem;
+      background: var(--cream);
+    }
+    .hero-tag {
+      font-size: .72rem; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.4rem;
+      opacity: 0; animation: fadeUp .8s .4s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 5vw, 5.5rem);
+      font-weight: 300; line-height: 1.08;
+      opacity: 0; animation: fadeUp .9s .6s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      margin-top: 1.8rem; font-size: .9rem; line-height: 1.8;
+      color: var(--warm-gray); max-width: 360px;
+      opacity: 0; animation: fadeUp .9s .8s forwards;
+    }
+    .hero-cta {
+      margin-top: 2.8rem; display: flex; gap: 1.2rem; align-items: center;
+      opacity: 0; animation: fadeUp .9s 1s forwards;
+    }
+    .btn-primary {
+      padding: .9rem 2.4rem; background: var(--accent); color: var(--cream);
+      font-family: 'Jost', sans-serif; font-size: .78rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background .25s;
+    }
+    .btn-primary:hover { background: var(--charcoal); }
+    .btn-ghost {
+      font-size: .78rem; letter-spacing: .14em;
+      color: var(--warm-gray); text-decoration: none;
+      border-bottom: 1px solid var(--clay); padding-bottom: 2px;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--charcoal); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MARQUEE */
+    .marquee-wrap { overflow: hidden; background: var(--charcoal); padding: .9rem 0; }
+    .marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+    .marquee-track span {
+      font-size: .72rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--clay); white-space: nowrap; padding: 0 2.4rem;
+    }
+    .marquee-track span::after { content: '·'; margin-left: 2.4rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SHARED */
+    .section-label { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: var(--accent); }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3.4rem); font-weight: 300; line-height: 1.15; margin-top: .6rem; }
+
+    /* ABOUT */
+    .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+    .about-images { position: relative; overflow: hidden; }
+    .about-images img { width: 100%; height: 100%; object-fit: cover; }
+    .about-badge {
+      position: absolute; bottom: 2.4rem; right: -1.6rem;
+      background: var(--accent); color: var(--cream);
+      padding: 1.8rem 2.2rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300;
+      line-height: 1; text-align: center;
+    }
+    .about-badge small {
+      display: block; font-size: .7rem; letter-spacing: .2em;
+      font-family: 'Jost', sans-serif; margin-top: .3rem; text-transform: uppercase;
+    }
+    .about-content { padding: 5rem 4.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .about-content p { margin-top: 1.4rem; font-size: .95rem; line-height: 1.85; color: var(--warm-gray); max-width: 420px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--charcoal); }
+    .stat-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--warm-gray); margin-top: .2rem; }
+
+    /* SERVICES */
+    .services { padding: 7rem 3rem; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--sand); }
+    .service-card { background: var(--cream); padding: 3.2rem 2.6rem; transition: background .3s; }
+    .service-card:hover { background: var(--charcoal); }
+    .service-card:hover .service-num,
+    .service-card:hover .service-name,
+    .service-card:hover .service-desc { color: var(--cream); }
+    .service-card:hover .service-line { background: var(--clay); }
+    .service-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--clay); transition: color .3s; }
+    .service-line { width: 2.5rem; height: 1px; background: var(--sand); margin: 1.2rem 0; transition: background .3s; }
+    .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; transition: color .3s; }
+    .service-desc { margin-top: .8rem; font-size: .85rem; line-height: 1.7; color: var(--warm-gray); transition: color .3s; }
+
+    /* PORTFOLIO */
+    .portfolio { padding: 0 3rem 7rem; }
+    .portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+    .portfolio-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 400px 300px; gap: 1rem; }
+    .portfolio-item { position: relative; overflow: hidden; cursor: pointer; }
+    .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .65s cubic-bezier(.22,.61,.36,1); }
+    .portfolio-item:hover img { transform: scale(1.07); }
+    .portfolio-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(30,45,43,.75) 0%, transparent 55%);
+      opacity: 0; transition: opacity .35s;
+    }
+    .portfolio-item:hover .portfolio-item-overlay { opacity: 1; }
+    .portfolio-item-info { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; transform: translateY(6px); opacity: 0; transition: all .35s; }
+    .portfolio-item:hover .portfolio-item-info { transform: translateY(0); opacity: 1; }
+    .portfolio-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--cream); }
+    .portfolio-item-tag { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--clay); margin-top: .3rem; }
+    .portfolio-item:first-child { grid-row: 1 / 3; }
+
+    /* PROCESS */
+    .process { background: var(--charcoal); color: var(--cream); padding: 7rem 3rem; }
+    .process-header { text-align: center; margin-bottom: 5rem; }
+    .process-header .section-label { color: var(--clay); }
+    .process-header .section-title { color: var(--cream); }
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+    .process-step { text-align: center; }
+    .step-circle {
+      width: 64px; height: 64px; border: 1px solid var(--clay); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 1.4rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--clay);
+    }
+    .step-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: .6rem; }
+    .step-desc { font-size: .82rem; line-height: 1.7; color: rgba(242,245,244,.55); }
+
+    /* TESTIMONIAL */
+    .testimonial { padding: 7rem 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center; }
+    .testimonial-image { position: relative; }
+    .testimonial-image img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .testimonial-accent { position: absolute; top: -1.2rem; left: -1.2rem; width: 60%; height: 60%; border: 1px solid var(--clay); z-index: -1; }
+    .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 6rem; color: var(--clay); line-height: .5; margin-bottom: 1.4rem; }
+    .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.5; }
+    .quote-author { margin-top: 2rem; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+
+    /* CONTACT FORM */
+    .contact-section { display: grid; grid-template-columns: 1fr 1fr; background: var(--charcoal); }
+    .contact-left { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid rgba(127,175,163,.15); }
+    .contact-left .section-label { color: var(--clay); }
+    .contact-left .section-title { color: var(--cream); margin-bottom: 1.2rem; }
+    .contact-sub { font-size: .9rem; line-height: 1.8; color: rgba(242,245,244,.5); max-width: 320px; margin-bottom: 2.4rem; }
+    .contact-details { display: flex; flex-direction: column; gap: .9rem; }
+    .contact-detail-item { display: flex; align-items: center; gap: .9rem; font-size: .85rem; color: rgba(242,245,244,.6); }
+    .contact-icon { color: var(--clay); font-size: .7rem; }
+    .contact-right { padding: 6rem 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--clay); }
+    .form-input {
+      background: rgba(127,175,163,.08); border: 1px solid rgba(127,175,163,.25);
+      padding: .9rem 1.1rem; font-family: 'Jost', sans-serif; font-size: .9rem;
+      color: var(--cream); outline: none; transition: border-color .25s, background .25s;
+    }
+    .form-input::placeholder { color: rgba(242,245,244,.3); }
+    .form-input:focus { border-color: var(--clay); background: rgba(127,175,163,.14); }
+    .btn-submit {
+      margin-top: .6rem; padding: 1rem 2.4rem; align-self: flex-start;
+      background: var(--accent); color: var(--cream);
+      font-family: 'Jost', sans-serif; font-size: .78rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      border: none; cursor: pointer; transition: background .25s;
+    }
+    .btn-submit:hover { background: var(--clay); }
+    .form-note { font-size: .82rem; color: var(--clay); min-height: 1.2rem; }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); color: rgba(242,245,244,.5); padding: 4rem 3rem 2rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: .8rem; }
+    .footer-tagline { font-size: .85rem; line-height: 1.7; }
+    .footer-col-title { font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--clay); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: .5rem; }
+    .footer-col ul a { color: rgba(242,245,244,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-col ul a:hover { color: var(--cream); }
+    .footer-bottom { border-top: 1px solid rgba(242,245,244,.1); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: .72rem; letter-spacing: .08em; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.6rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { height: 55vh; }
+      .hero-right { padding: 3rem 2rem; }
+      .about { grid-template-columns: 1fr; }
+      .about-images { height: 50vh; }
+      .about-content { padding: 3rem 2rem; }
+      .services { padding: 4rem 1.6rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .portfolio { padding: 0 1.6rem 4rem; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .portfolio-item:first-child { grid-row: auto; }
+      .process { padding: 4rem 1.6rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .testimonial { grid-template-columns: 1fr; padding: 4rem 1.6rem; }
+      .contact-section { grid-template-columns: 1fr; }
+      .contact-left { padding: 3rem 1.6rem; border-right: none; border-bottom: 1px solid rgba(127,175,163,.15); }
+      .contact-right { padding: 3rem 1.6rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#">Imaya Interiors</a>
+    <ul class="nav-links">
+      <li><a href="#about">Studio</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80&auto=format&fit=crop" alt="Elegant living room" loading="eager"/>
+    </div>
+    <div class="hero-right">
+      <p class="hero-tag">Your Dreams, Our Design</p>
+      <h1 class="hero-title">Where spaces<br/>find their <em>soul.</em></h1>
+      <p class="hero-sub">We craft interiors that transcend trends — grounded in materiality, light, and the quiet art of living beautifully.</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-primary">View Portfolio</a>
+        <a href="#contact" class="btn-ghost">Book a Consultation</a>
       </div>
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Residential Design</span><span>Commercial Spaces</span><span>Custom Furniture</span>
+      <span>Lighting Curation</span><span>Material Sourcing</span><span>Project Management</span>
+      <span>Residential Design</span><span>Commercial Spaces</span><span>Custom Furniture</span>
+      <span>Lighting Curation</span><span>Material Sourcing</span><span>Project Management</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about reveal" id="about">
+    <div class="about-images">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&auto=format&fit=crop" alt="Minimalist sofa"/>
+      <div class="about-badge">12<small>Years of craft</small></div>
+    </div>
+    <div class="about-content">
+      <p class="section-label">Our Studio</p>
+      <h2 class="section-title">Thoughtful design,<br/>enduring beauty.</h2>
+      <p>Imaya Interiors was founded on a simple belief: the spaces we inhabit shape who we become. We blend architectural sensibility with an intimate understanding of how people truly live.</p>
+      <p>Our multidisciplinary team brings together interior architects, material specialists, and artisan collaborators across Europe and Asia.</p>
+      <div class="stats">
+        <div><div class="stat-num">240+</div><div class="stat-label">Projects Completed</div></div>
+        <div><div class="stat-num">18</div><div class="stat-label">Countries</div></div>
+        <div><div class="stat-num">94%</div><div class="stat-label">Client Return Rate</div></div>
+        <div><div class="stat-num">7</div><div class="stat-label">Design Awards</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services reveal" id="services">
+    <div class="services-header">
+      <div>
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title">Our Services</h2>
+      </div>
+      <a href="#contact" class="btn-ghost">Get in touch →</a>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div><div class="service-line"></div>
+        <div class="service-name">Residential Design</div>
+        <p class="service-desc">Full-scope home transformations — from spatial planning and material selection to furniture sourcing and final styling.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div><div class="service-line"></div>
+        <div class="service-name">Commercial Interiors</div>
+        <p class="service-desc">Workplaces, hospitality, and retail environments that balance brand identity with human-centred functionality.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div><div class="service-line"></div>
+        <div class="service-name">Concept & Styling</div>
+        <p class="service-desc">Mood boards, material palettes, and creative direction for developers, architects, and independent clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio reveal" id="work">
+    <div class="portfolio-header">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">Recent Projects</h2>
+      </div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=80&auto=format&fit=crop" alt="Modern living room"/>
+        <div class="portfolio-item-overlay"></div>
+        <div class="portfolio-item-info"><div class="portfolio-item-name">The Oslo Residence</div><div class="portfolio-item-tag">Residential · 2024</div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=80&auto=format&fit=crop" alt="Bedroom interior"/>
+        <div class="portfolio-item-overlay"></div>
+        <div class="portfolio-item-info"><div class="portfolio-item-name">Milan Suite</div><div class="portfolio-item-tag">Hospitality · 2024</div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80&auto=format&fit=crop" alt="Scandinavian interior"/>
+        <div class="portfolio-item-overlay"></div>
+        <div class="portfolio-item-info"><div class="portfolio-item-name">Copenhagen Loft</div><div class="portfolio-item-tag">Residential · 2023</div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?w=700&q=80&auto=format&fit=crop" alt="Dining room"/>
+        <div class="portfolio-item-overlay"></div>
+        <div class="portfolio-item-info"><div class="portfolio-item-name">Tokyo Dining Studio</div><div class="portfolio-item-tag">Commercial · 2023</div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://images.unsplash.com/photo-1499916078039-922301b0eb9b?w=700&q=80&auto=format&fit=crop" alt="Kitchen design"/>
+        <div class="portfolio-item-overlay"></div>
+        <div class="portfolio-item-info"><div class="portfolio-item-name">Parisian Kitchen</div><div class="portfolio-item-tag">Residential · 2023</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="process-header reveal">
+      <p class="section-label">How We Work</p>
+      <h2 class="section-title">Our Process</h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-circle">01</div>
+        <div class="step-name">Discovery</div>
+        <p class="step-desc">A deep listening session to understand your life, aesthetic vision, and aspirations for the space.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">02</div>
+        <div class="step-name">Concept</div>
+        <p class="step-desc">We develop a cohesive design narrative — spatial layouts, material stories, and mood references.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">03</div>
+        <div class="step-name">Refinement</div>
+        <p class="step-desc">Iterative collaboration to perfect every detail until the design resonates completely.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">04</div>
+        <div class="step-name">Realisation</div>
+        <p class="step-desc">We oversee execution from first hammer strike to the final curated object placed with intention.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="testimonial reveal">
+    <div class="testimonial-image">
+      <div class="testimonial-accent"></div>
+      <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=700&q=80&auto=format&fit=crop" alt="Beautiful interior"/>
+    </div>
+    <div class="testimonial-content">
+      <div class="quote-mark">"</div>
+      <p class="quote-text">Imaya Interiors didn't just redesign our home — they redesigned how we experience being in it. Every material, every proportion feels like it was made for us.</p>
+      <p class="quote-author">— Clara Lindström, Stockholm</p>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="contact-section reveal" id="contact">
+    <div class="contact-left">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Ready to begin<br/>your project?</h2>
+      <p class="contact-sub">Tell us about your vision and we'll get back to you within 24 hours.</p>
+      <div class="contact-details">
+        <div class="contact-detail-item"><span class="contact-icon">✦</span><span>hello@imayainteriors.com</span></div>
+        <div class="contact-detail-item"><span class="contact-icon">✦</span><span>Mon – Sat, 9am – 6pm</span></div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="form-group">
+        <label class="form-label" for="name">Full Name</label>
+        <input class="form-input" type="text" id="name" placeholder="Your full name"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="phone">Phone Number</label>
+        <input class="form-input" type="tel" id="phone" placeholder="+91 00000 00000"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="location">Location</label>
+        <input class="form-input" type="text" id="location" placeholder="City, State"/>
+      </div>
+      <button class="btn-submit" onclick="handleSubmit()">Send Enquiry</button>
+      <p class="form-note" id="form-msg"></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Imaya Interiors</div>
+        <p class="footer-tagline">Your Dreams, Our Design — crafting spaces of quiet luxury and enduring character.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Studio</div>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Awards</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Work</div>
+        <ul>
+          <li><a href="#">Residential</a></li>
+          <li><a href="#">Commercial</a></li>
+          <li><a href="#">Hospitality</a></li>
+          <li><a href="#">Archive</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Connect</div>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Pinterest</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Imaya Interiors. All rights reserved.</span>
+      <span>Images via Unsplash (CC0)</span>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    function handleSubmit() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const location = document.getElementById('location').value.trim();
+      const msg = document.getElementById('form-msg');
+      if (!name || !email || !phone || !location) {
+        msg.style.color = '#e08080';
+        msg.textContent = 'Please fill in all fields.';
+        return;
+      }
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailOk) {
+        msg.style.color = '#e08080';
+        msg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      msg.style.color = 'var(--clay)';
+      msg.textContent = "✓ Thank you! We'll be in touch within 24 hours.";
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('location').value = '';
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+</body>
 </html>

@@ -77,6 +77,10 @@
       flex-direction: column; align-items: center; justify-content: center;
       gap: 2.4rem;
     }
+    .nav-drawer .close-btn {
+      position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none;
+      color: var(--cream); font-size: 1.6rem; cursor: pointer; padding: .4rem;
+    }
     .nav-drawer.open { display: flex; }
     .nav-drawer a {
       font-family: 'Cormorant Garamond', serif;
@@ -432,6 +436,7 @@
 
   <!-- MOBILE DRAWER -->
   <div class="nav-drawer" id="navDrawer">
+  <button class="close-btn" id="navDrawerClose" aria-label="Close menu" onclick="closeDrawer()">✕</button>
     <a href="#about"    onclick="closeDrawer()">Studio</a>
     <a href="#services" onclick="closeDrawer()">Services</a>
     <a href="#work"     onclick="closeDrawer()">Work</a>

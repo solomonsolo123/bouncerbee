@@ -849,6 +849,8 @@
             formBody.append('_subject', `Enquiry: ${name} — ${location}`);
             formBody.append('_template', 'table');
             formBody.append('_captcha', 'false');
+            // Provide a Reply-To so recipients can reply directly to the user's email — helps spam filtering
+            formBody.append('_replyto', email);
             const res = await fetch(formEndpoint, {
               method: 'POST',
               headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },

@@ -325,7 +325,9 @@
 
       /* Hero — stack vertically */
       .hero { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
-      .hero-left { height: 50vw; min-height: 240px; max-height: 380px; }
+  .hero-left { height: 50vw; min-height: 240px; max-height: 380px; }
+  /* Ensure mobile crop focuses on the top/subject of the image */
+  .hero-left img { object-position: center top; }
       .hero-right { padding: 2.8rem 1.6rem 3.2rem; }
       .hero-sub { max-width: 100%; }
       .hero-cta { flex-direction: column; align-items: flex-start; gap: 1rem; }

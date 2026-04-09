@@ -247,6 +247,19 @@
     .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.2vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.5; }
     .quote-author { margin-top: 2rem; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
 
+  /* Testimonial carousel */
+  .testimonial-carousel { position: relative; }
+  .testimonial-item { display: none; opacity: 0; transition: opacity .45s ease; }
+  .testimonial-item.active { display: block; opacity: 1; }
+  /* Dots / pager */
+  .testimonial-dots { display:flex; gap:.6rem; margin-top:1.1rem; }
+  .testimonial-dots .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: rgba(43,42,40,.12);
+    cursor: pointer; border: 1px solid rgba(43,42,40,.06); transition: transform .18s, background .18s, opacity .18s;
+    opacity: .8;
+  }
+  .testimonial-dots .dot.active { background: var(--clay); opacity: 1; transform: scale(1.08); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+
     /* ── CONTACT FORM ── */
     .contact-section { display: grid; grid-template-columns: 1fr 1fr; background: var(--charcoal); }
     .contact-left { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid rgba(127,175,163,.15); }
@@ -418,6 +431,7 @@
     .modal-desc { font-size: .95rem; line-height: 1.6; color: var(--warm-gray); }
     .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
     @media (max-width: 768px) { .modal { grid-template-columns: 1fr; } }
+  .values-list { list-style: disc; margin-left: 1.2rem; margin-top: .6rem; line-height: 1.7; }
 
     /* ── APP OPEN POPUP ── */
     .app-open-overlay {
@@ -479,6 +493,8 @@
     </div>
   </section>
 
+  <!-- (Vision moved into About section) -->
+
   <!-- PORTFOLIO MODAL -->
   <div class="modal-overlay" id="projectModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -509,11 +525,21 @@
       <div class="about-badge">12<small>Years of craft</small></div>
     </div>
     <div class="about-content">
-      <p class="section-label">Our Studio</p>
-      <h2 class="section-title">Thoughtful design,<br/>enduring beauty.</h2>
-  <p>Imaya Interiors was founded to create homes for Indian life — generous with daylight, durable for active households, and rooted in regional craft.
-  </p>
-  <p>Our multidisciplinary team partners with Indian artisans, local fabricators, and sustainability specialists to make thoughtful, buildable designs.</p>
+      <p class="section-label">Who we are</p>
+      <h2 class="section-title">Our Vision</h2>
+  <p style="margin-top:1rem; font-size:1rem; line-height:1.7; color:var(--warm-gray);">To be the most trusted name in interior design, transforming every space into a masterpiece of comfort, elegance, and soul.</p>
+
+      <h3 style="margin-top:1.6rem; font-family: 'Cormorant Garamond', serif; font-weight:300;">Our Mission</h3>
+      <p style="margin-top:.6rem; font-size:1rem; line-height:1.7; color:var(--warm-gray);">To bring 'Your Dreams to Our Designs' by blending innovative aesthetics with functional excellence, delivering personalized spaces that reflect our clients' unique identities.</p>
+
+      <h3 style="margin-top:1.6rem; font-family: 'Cormorant Garamond', serif; font-weight:300;">Our Values</h3>
+      <ul class="values-list" style="margin-top:.8rem; color:var(--warm-gray);">
+        <li>Design-First Integrity — Every line, material, and light source is chosen with intention and quality in mind.</li>
+        <li>Minimalist Excellence — We champion a "short and sleek" philosophy—removing the unnecessary to let true beauty and functionality shine.</li>
+        <li>Client Collaboration — We design with our clients; your vision is the heart of our process.</li>
+        <li>Professional Precision — From initial SketchUp models to final V-Ray renders and site execution, we maintain technical and professional perfection.</li>
+        <li>Future-Focused — We stay ahead of trends and technology to provide modern, sustainable, and smart interior solutions.</li>
+      </ul>
       <div class="stats">
   <div><div class="stat-num">240+</div><div class="stat-label">Projects Completed (India)</div></div>
   <div><div class="stat-num">12</div><div class="stat-label">Cities Covered</div></div>
@@ -624,10 +650,24 @@
       <div class="testimonial-accent"></div>
       <img src="assets/IMG_20260319_205324.png" alt="Beautiful interior"/>
     </div>
-    <div class="testimonial-content">
+    <div class="testimonial-content testimonial-carousel" id="testimonialCarousel">
       <div class="quote-mark">"</div>
-  <p class="quote-text">Imaya Interiors transformed our flat into a calm, functional home — the team understood our routines and local climate.</p>
-  <p class="quote-author">— Asha Kapoor</p>
+
+      <div class="testimonial-item active">
+        <p class="quote-text">Imaya Interiors transformed our flat into a calm, functional home — the team understood our routines and local climate.</p>
+        <p class="quote-author">— Asha Kapoor</p>
+      </div>
+
+      <div class="testimonial-item">
+        <p class="quote-text">The 3D visualizations provided by Imaya Interiors were incredibly helpful. Seeing the V-Ray renders of our media unit and kitchen before construction started gave us total confidence in the wood and laminate choices.</p>
+        <p class="quote-author">— Sahana M</p>
+      </div>
+
+      <div class="testimonial-item">
+        <p class="quote-text">If you want a clutter-free, 'short and sleek' aesthetic, this is the place. They have a talent for removing the unnecessary while keeping the space warm and functional. Our office conference room feels twice as large thanks to their layout.</p>
+        <p class="quote-author">— Charles Pramod Kumar</p>
+      </div>
+  <div class="testimonial-dots" id="testimonialDots" aria-hidden="false"></div>
     </div>
   </section>
 
@@ -637,10 +677,10 @@
       <p class="section-label">Get In Touch</p>
       <h2 class="section-title">Ready to begin<br/>your project?</h2>
       <p class="contact-sub">Tell us about your vision and we'll get back to you within 24 hours.</p>
-      <div class="contact-details">
-  <div class="contact-detail-item"><span class="contact-icon">✦</span><span>hello@imayainteriors.in</span></div>
+    <div class="contact-details">
+  <div class="contact-detail-item"><span class="contact-icon">✦</span><span>design@imayainteriors.in</span></div>
   <div class="contact-detail-item"><span class="contact-icon">✦</span><span>Mon – Sat, 9am – 6pm IST</span></div>
-      </div>
+    </div>
     </div>
     <div class="contact-right">
       <div class="form-group">
@@ -761,16 +801,16 @@
         return;
       }
 
-      // Build mailto fallback
-      const to = 'hello@imayainteriors.in';
+    // Build mailto fallback
+  const to = 'design@imayainteriors.in';
       const subject = encodeURIComponent(`Enquiry from ${name} — ${location}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\n\nMessage:\n${message}`);
       const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
       // Open user's email client
       window.location.href = mailto;
 
-      msgEl.style.color = 'var(--clay)';
-      msgEl.textContent = "✓ Thank you! Your email client should open — we'll follow up within 24 hours.";
+    msgEl.style.color = 'var(--clay)';
+  msgEl.textContent = "✓ Thank you! Your email client should open to send to design@imayainteriors.in — we'll follow up within 24 hours.";
       ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     }
 
@@ -847,6 +887,51 @@
     modalClose.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+  <script>
+    // Testimonial carousel rotation
+    (function() {
+      const carousel = document.getElementById('testimonialCarousel');
+      if (!carousel) return;
+      const items = carousel.querySelectorAll('.testimonial-item');
+      if (!items.length) return;
+      let idx = 0;
+      function show(i) {
+        items.forEach((it, n) => it.classList.toggle('active', n === i));
+      }
+      show(idx);
+      let interval = setInterval(() => {
+        idx = (idx + 1) % items.length;
+        show(idx);
+      }, 5000);
+      // Build dots
+      const dotsWrap = document.getElementById('testimonialDots');
+      const dots = [];
+      if (dotsWrap) {
+        items.forEach((_, i) => {
+          const d = document.createElement('button');
+          d.className = 'dot';
+          d.setAttribute('aria-label', `Show testimonial ${i+1}`);
+          d.addEventListener('click', () => {
+            idx = i; show(idx);
+            // reset interval
+            if (interval) clearInterval(interval);
+            interval = setInterval(() => { idx = (idx + 1) % items.length; show(idx); }, 5000);
+          });
+          dotsWrap.appendChild(d);
+          dots.push(d);
+        });
+      }
+      function updateDots(i) { if (!dots.length) return; dots.forEach((d,n)=> d.classList.toggle('active', n===i)); }
+      // hook into show to update dots
+      const _show = show;
+      show = function(i) { _show(i); updateDots(i); };
+      // Pause carousel when page hidden; resume when visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { clearInterval(interval); interval = null; }
+        else if (!interval) { interval = setInterval(() => { idx = (idx + 1) % items.length; show(idx); }, 5000); }
+      });
+    })();
   </script>
 </body>
 </html>

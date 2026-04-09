@@ -716,7 +716,7 @@
   <input type="hidden" name="_subject" value="Enquiry from Imaya Interiors website">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
-  <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()"><span class="spinner" aria-hidden="true"></span>Send Enquiry</button>
+  <button type="submit" class="btn-submit" id="submitBtn"><span class="spinner" aria-hidden="true"></span>Send Enquiry</button>
       <p class="form-note" id="form-msg"></p>
     </form>
   </section>
@@ -796,7 +796,9 @@
     }
 
     // Contact form
-    async function handleSubmit() {
+    async function handleSubmit(e) {
+      // If called as a submit handler, prevent the browser from performing a native submit
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       const name     = document.getElementById('name').value.trim();
       const email    = document.getElementById('email').value.trim();
       const phone    = document.getElementById('phone').value.trim();
@@ -913,6 +915,9 @@
       msgEl.textContent = "✓ Thank you! Your email client should open to send to design@imayainteriors.in — we'll follow up within 24 hours.";
       ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     }
+  // Ensure the form's submit event uses our handler (covers Enter and native submit button)
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) contactForm.addEventListener('submit', handleSubmit);
 
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {

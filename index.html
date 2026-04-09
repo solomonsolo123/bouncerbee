@@ -10,12 +10,13 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --cream: #f2f5f4;
-      --sand: #dce8e4;
-      --clay: #7fafa3;
-      --charcoal: #1e2d2b;
-      --warm-gray: #6b8882;
-      --accent: #4a9089;
+      /* Brown-themed palette */
+      --cream: #f7f3ee;   /* warm off-white */
+      --sand:  #efe2d6;   /* soft sand */
+      --clay:  #a67c52;   /* brown clay */
+      --charcoal: #2b2a28;/* deep neutral */
+      --warm-gray: #8b7a6b;/* warm gray */
+      --accent: #8b5e3c;  /* brown accent */
     }
 
     html { scroll-behavior: smooth; }
@@ -393,6 +394,24 @@
       .portfolio-item { height: 70vw; }
       .testimonial-image { max-width: 80%; }
     }
+    /* ── MODAL / POPUP ── */
+    .modal-overlay {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.6); z-index: 120; padding: 2rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--cream); color: var(--charcoal); max-width: 900px; width: 100%;
+      box-shadow: 0 8px 30px rgba(0,0,0,.35); display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      overflow: hidden;
+    }
+    .modal-img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-body { padding: 1.6rem 1.8rem; display: flex; flex-direction: column; justify-content: center; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: .6rem; }
+    .modal-tag { font-size: .72rem; letter-spacing: .18em; color: var(--warm-gray); margin-bottom: .8rem; }
+    .modal-desc { font-size: .95rem; line-height: 1.6; color: var(--warm-gray); }
+    .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
+    @media (max-width: 768px) { .modal { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -422,7 +441,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80&auto=format&fit=crop" alt="Elegant living room" loading="eager"/>
+      <img src="assets/IMG_20260319_193753.png" alt="Minimalist sofa" loading="eager"/>
     </div>
     <div class="hero-right">
       <p class="hero-tag">Your Dreams, Our Design</p>
@@ -434,6 +453,19 @@
       </div>
     </div>
   </section>
+
+  <!-- PORTFOLIO MODAL -->
+  <div class="modal-overlay" id="projectModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <img class="modal-img" id="modalImg" src="" alt=""/>
+      <div class="modal-body">
+        <div class="modal-title" id="modalTitle">Project Title</div>
+        <div class="modal-tag" id="modalTag">Category · Year</div>
+        <div class="modal-desc" id="modalDesc">Project description goes here. Add details about scope, materials, and approach.</div>
+      </div>
+    </div>
+  </div>
 
   <!-- MARQUEE -->
   <div class="marquee-wrap">
@@ -448,7 +480,7 @@
   <!-- ABOUT -->
   <section class="about reveal" id="about">
     <div class="about-images">
-      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&auto=format&fit=crop" alt="Minimalist sofa"/>
+      <img src="assets/IMG_20260321_205154.png" alt="Elegant living room"/>
       <div class="about-badge">12<small>Years of craft</small></div>
     </div>
     <div class="about-content">
@@ -503,27 +535,27 @@
     </div>
     <div class="portfolio-grid">
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=80&auto=format&fit=crop" alt="Modern living room"/>
+        <img src="assets/IMG_20260319_185109.png" alt="Modern living room"/>
         <div class="portfolio-item-overlay"></div>
         <div class="portfolio-item-info"><div class="portfolio-item-name">The Oslo Residence</div><div class="portfolio-item-tag">Residential · 2024</div></div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=80&auto=format&fit=crop" alt="Bedroom interior"/>
+        <img src="assets/IMG_20260319_185333.png" alt="Bedroom interior"/>
         <div class="portfolio-item-overlay"></div>
         <div class="portfolio-item-info"><div class="portfolio-item-name">Milan Suite</div><div class="portfolio-item-tag">Hospitality · 2024</div></div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80&auto=format&fit=crop" alt="Scandinavian interior"/>
+        <img src="assets/IMG_20260319_193737.png" alt="Scandinavian interior"/>
         <div class="portfolio-item-overlay"></div>
         <div class="portfolio-item-info"><div class="portfolio-item-name">Copenhagen Loft</div><div class="portfolio-item-tag">Residential · 2023</div></div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?w=700&q=80&auto=format&fit=crop" alt="Dining room"/>
+        <img src="assets/IMG_20260319_193851.png" alt="Dining room"/>
         <div class="portfolio-item-overlay"></div>
         <div class="portfolio-item-info"><div class="portfolio-item-name">Tokyo Dining Studio</div><div class="portfolio-item-tag">Commercial · 2023</div></div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1499916078039-922301b0eb9b?w=700&q=80&auto=format&fit=crop" alt="Kitchen design"/>
+        <img src="assets/3baf3cec-d2eb-401c-a45c-74142636d20f.png" alt="Kitchen design"/>
         <div class="portfolio-item-overlay"></div>
         <div class="portfolio-item-info"><div class="portfolio-item-name">Parisian Kitchen</div><div class="portfolio-item-tag">Residential · 2023</div></div>
       </div>
@@ -564,7 +596,7 @@
   <section class="testimonial reveal">
     <div class="testimonial-image">
       <div class="testimonial-accent"></div>
-      <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=700&q=80&auto=format&fit=crop" alt="Beautiful interior"/>
+      <img src="assets/IMG_20260319_205324.png" alt="Beautiful interior"/>
     </div>
     <div class="testimonial-content">
       <div class="quote-mark">"</div>
@@ -697,6 +729,46 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+  </script>
+
+  
+
+  <script>
+    // Portfolio modal
+    const modalOverlay = document.getElementById('projectModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTag = document.getElementById('modalTag');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(item) {
+      const img = item.querySelector('img');
+      const name = item.querySelector('.portfolio-item-name')?.textContent || 'Project';
+      const tag  = item.querySelector('.portfolio-item-tag')?.textContent || '';
+      modalImg.src = img.src;
+      modalImg.alt = img.alt || name;
+      modalTitle.textContent = name;
+      modalTag.textContent = tag;
+      modalDesc.textContent = `A closer look at ${name}. Contact us for details or view the full case study.`;
+      modalOverlay.classList.add('open');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      modalImg.src = '';
+    }
+
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      item.addEventListener('click', () => openModal(item));
+    });
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
 </body>
 </html>

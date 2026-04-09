@@ -691,30 +691,34 @@
   <div class="contact-detail-item"><span class="contact-icon">✦</span><span>Mon – Sat, 9am – 6pm IST</span></div>
     </div>
     </div>
-    <div class="contact-right">
+    <form class="contact-right" id="contactForm" action="https://formsubmit.co/4d940b5e479f244530a07c3e18c55064" method="POST">
       <div class="form-group">
         <label class="form-label" for="name">Full Name</label>
-        <input class="form-input" type="text" id="name" placeholder="Your full name"/>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Your full name"/>
       </div>
       <div class="form-group">
         <label class="form-label" for="email">Email Address</label>
-        <input class="form-input" type="email" id="email" placeholder="you@example.com"/>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com"/>
       </div>
       <div class="form-group">
         <label class="form-label" for="phone">Phone Number</label>
-        <input class="form-input" type="tel" id="phone" placeholder="+91 00000 00000"/>
+        <input class="form-input" type="tel" id="phone" name="phone" placeholder="+91 00000 00000"/>
       </div>
       <div class="form-group">
         <label class="form-label" for="location">Location</label>
-        <input class="form-input" type="text" id="location" placeholder="City, State"/>
+        <input class="form-input" type="text" id="location" name="location" placeholder="City, State"/>
       </div>
       <div class="form-group">
         <label class="form-label" for="message">Message</label>
-        <textarea class="form-input" id="message" placeholder="Tell us about your project" rows="4" style="resize:vertical"></textarea>
+        <textarea class="form-input" id="message" name="message" placeholder="Tell us about your project" rows="4" style="resize:vertical"></textarea>
       </div>
-  <button class="btn-submit" id="submitBtn" onclick="handleSubmit()"><span class="spinner" aria-hidden="true"></span>Send Enquiry</button>
+  <!-- Hidden inputs for Formsubmit behaviour when a native form submission occurs -->
+  <input type="hidden" name="_subject" value="Enquiry from Imaya Interiors website">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()"><span class="spinner" aria-hidden="true"></span>Send Enquiry</button>
       <p class="form-note" id="form-msg"></p>
-    </div>
+    </form>
   </section>
 
   <!-- FOOTER -->

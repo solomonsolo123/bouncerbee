@@ -289,6 +289,15 @@
       -webkit-appearance: none; border-radius: 0;
     }
     .btn-submit:hover { background: var(--clay); }
+    .btn-submit { position: relative; }
+    .btn-submit .spinner {
+      display: none; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      width: 14px; height: 14px; border: 2px solid rgba(247,243,238,0.35); border-top-color: var(--cream);
+      border-radius: 50%; animation: spin .8s linear infinite;
+    }
+    .btn-submit.loading { opacity: .9; pointer-events: none; }
+    .btn-submit.loading .spinner { display: inline-block; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
     .form-note { font-size: .82rem; color: var(--clay); min-height: 1.2rem; }
 
     /* ── FOOTER ── */
@@ -703,7 +712,7 @@
         <label class="form-label" for="message">Message</label>
         <textarea class="form-input" id="message" placeholder="Tell us about your project" rows="4" style="resize:vertical"></textarea>
       </div>
-      <button class="btn-submit" onclick="handleSubmit()">Send Enquiry</button>
+  <button class="btn-submit" id="submitBtn" onclick="handleSubmit()"><span class="spinner" aria-hidden="true"></span>Send Enquiry</button>
       <p class="form-note" id="form-msg"></p>
     </div>
   </section>
@@ -783,7 +792,7 @@
     }
 
     // Contact form
-    function handleSubmit() {
+    async function handleSubmit() {
       const name     = document.getElementById('name').value.trim();
       const email    = document.getElementById('email').value.trim();
       const phone    = document.getElementById('phone').value.trim();
@@ -801,16 +810,103 @@
         return;
       }
 
-    // Build mailto fallback
-  const to = 'design@imayainteriors.in';
+      // Configurable server endpoint (set this to your Formspree / Netlify function / server URL).
+      // Example Formspree endpoint: https://formspree.io/f/yourFormId
+      // If left empty, we'll directly open the user's email client (mailto fallback).
+  // Default: use Formsubmit.co to deliver enquiries. To avoid exposing the naked inbox
+  // in the action URL we use a per-form token instead of the raw email address.
+  // Replace this token with your provider token if you have a different one.
+  const formEndpoint = 'https://formsubmit.co/4d940b5e479f244530a07c3e18c55064';
+
+      const payload = { name, email, phone, location, message };
+
+      // Build mailto fallback (used if no endpoint configured or if the request fails)
+      const to = 'design@imayainteriors.in';
       const subject = encodeURIComponent(`Enquiry from ${name} — ${location}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\n\nMessage:\n${message}`);
       const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
-      // Open user's email client
-      window.location.href = mailto;
 
-    msgEl.style.color = 'var(--clay)';
-  msgEl.textContent = "✓ Thank you! Your email client should open to send to design@imayainteriors.in — we'll follow up within 24 hours.";
+      // Manage submit button loading state
+      const submitBtn = document.getElementById('submitBtn');
+      function setLoading(on) { if (!submitBtn) return; submitBtn.classList.toggle('loading', on); }
+
+      // If a formEndpoint is provided, detect whether it's Formsubmit (requires urlencoded body)
+      if (formEndpoint) {
+        setLoading(true);
+        // If the endpoint is formsubmit.co, send URL-encoded form data
+        if (formEndpoint.includes('formsubmit.co')) {
+          msgEl.style.color = 'var(--warm-gray)';
+          msgEl.textContent = 'Sending via form service...';
+          try {
+            const formBody = new URLSearchParams();
+            Object.entries(payload).forEach(([k,v]) => formBody.append(k, v));
+            formBody.append('_subject', `Enquiry: ${name} — ${location}`);
+            formBody.append('_template', 'table');
+            formBody.append('_captcha', 'false');
+            const res = await fetch(formEndpoint, {
+              method: 'POST',
+              headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: formBody.toString()
+            });
+            if (res.ok) {
+              msgEl.style.color = 'var(--clay)';
+              msgEl.textContent = '✓ Enquiry sent — please check your inbox. (You may need to verify the sender on first use.)';
+              ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+              setLoading(false);
+              return;
+            } else {
+              console.warn('Formservice responded with', res.status);
+              msgEl.style.color = '#e08080';
+              msgEl.textContent = 'Service returned an error; opening your email client as a fallback.';
+            }
+          } catch (err) {
+            console.warn('Form service failed', err);
+            msgEl.style.color = '#e08080';
+            msgEl.textContent = 'Could not reach form service — opening your email client as a fallback.';
+          }
+          setLoading(false);
+        } else {
+          // Generic JSON endpoint: try with a single retry
+          let attempts = 0;
+          const maxAttempts = 2;
+          msgEl.style.color = 'var(--warm-gray)';
+          msgEl.textContent = 'Sending enquiry...';
+          while (attempts < maxAttempts) {
+            attempts += 1;
+            try {
+              const res = await fetch(formEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              if (res.ok) {
+                msgEl.style.color = 'var(--clay)';
+                msgEl.textContent = '✓ Enquiry sent — we will follow up within 24 hours.';
+                ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+                setLoading(false);
+                return;
+              } else {
+                console.warn('Form endpoint responded with status', res.status);
+                msgEl.style.color = '#e08080';
+                msgEl.textContent = `Attempt ${attempts} failed. Retrying...`;
+              }
+            } catch (err) {
+              console.warn('Form submission failed', err);
+              msgEl.style.color = '#e08080';
+              msgEl.textContent = `Attempt ${attempts} failed. Retrying...`;
+            }
+          }
+          // exhausted attempts
+          setLoading(false);
+          msgEl.style.color = '#e08080';
+          msgEl.textContent = 'Could not send via server — opening your email client as a fallback.';
+        }
+      }
+
+      // Mailto fallback (opens user's email client). Keep this as a last resort for static sites.
+      window.location.href = mailto;
+      msgEl.style.color = 'var(--clay)';
+      msgEl.textContent = "✓ Thank you! Your email client should open to send to design@imayainteriors.in — we'll follow up within 24 hours.";
       ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     }
 

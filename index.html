@@ -418,6 +418,24 @@
     .modal-desc { font-size: .95rem; line-height: 1.6; color: var(--warm-gray); }
     .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
     @media (max-width: 768px) { .modal { grid-template-columns: 1fr; } }
+
+    /* ── APP OPEN POPUP ── */
+    .app-open-overlay {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.6); z-index: 130; padding: 2rem;
+    }
+    .app-open-overlay.open { display: flex; }
+    .app-open {
+      background: var(--cream); color: var(--charcoal); max-width: 420px; width: 100%;
+      padding: 1.2rem 1.4rem; box-shadow: 0 8px 30px rgba(0,0,0,.35); border-radius: 6px; text-align: center;
+    }
+    .app-open p { margin: .6rem 0 1rem; color: var(--warm-gray); }
+    .app-open .btn { display: inline-block; margin: .4rem; padding: .6rem 1rem; border-radius: 4px; text-decoration: none; font-weight: 600; }
+    .btn-open { background: var(--accent); color: var(--cream); }
+    .btn-continue { background: transparent; color: var(--charcoal); border: 1px solid rgba(0,0,0,.06); }
+
+    /* small social icon inline */
+    .social-icon { display: inline-block; width: 1rem; height: 1rem; vertical-align: middle; margin-right: .45rem; }
   </style>
 </head>
 <body>
@@ -545,27 +563,27 @@
       <div class="portfolio-item">
         <img src="assets/IMG_20260319_185109.png" alt="Modern living room"/>
         <div class="portfolio-item-overlay"></div>
-  <div class="portfolio-item-info"><div class="portfolio-item-name">Bengaluru Bungalow</div><div class="portfolio-item-tag">Residential · 2024</div></div>
+  <div class="portfolio-item-info"><div class="portfolio-item-name">Cozy Bungalow</div><div class="portfolio-item-tag">Residential · 2024</div></div>
       </div>
       <div class="portfolio-item">
         <img src="assets/IMG_20260319_185333.png" alt="Bedroom interior"/>
         <div class="portfolio-item-overlay"></div>
-  <div class="portfolio-item-info"><div class="portfolio-item-name">Mumbai Suite</div><div class="portfolio-item-tag">Hospitality · 2024</div></div>
+  <div class="portfolio-item-info"><div class="portfolio-item-name">Serene Suite</div><div class="portfolio-item-tag">Hospitality · 2024</div></div>
       </div>
       <div class="portfolio-item">
         <img src="assets/IMG_20260319_193737.png" alt="Scandinavian interior"/>
         <div class="portfolio-item-overlay"></div>
-  <div class="portfolio-item-info"><div class="portfolio-item-name">Pune Loft</div><div class="portfolio-item-tag">Residential · 2023</div></div>
+  <div class="portfolio-item-info"><div class="portfolio-item-name">Urban Loft</div><div class="portfolio-item-tag">Residential · 2023</div></div>
       </div>
       <div class="portfolio-item">
         <img src="assets/IMG_20260319_193851.png" alt="Dining room"/>
         <div class="portfolio-item-overlay"></div>
-  <div class="portfolio-item-info"><div class="portfolio-item-name">Delhi Dining Studio</div><div class="portfolio-item-tag">Commercial · 2023</div></div>
+  <div class="portfolio-item-info"><div class="portfolio-item-name">Contemporary Dining Studio</div><div class="portfolio-item-tag">Commercial · 2023</div></div>
       </div>
       <div class="portfolio-item">
         <img src="assets/3baf3cec-d2eb-401c-a45c-74142636d20f.png" alt="Kitchen design"/>
         <div class="portfolio-item-overlay"></div>
-  <div class="portfolio-item-info"><div class="portfolio-item-name">Goa Beach House</div><div class="portfolio-item-tag">Residential · 2023</div></div>
+  <div class="portfolio-item-info"><div class="portfolio-item-name">Seaside Retreat</div><div class="portfolio-item-tag">Residential · 2023</div></div>
       </div>
     </div>
   </section>
@@ -608,8 +626,8 @@
     </div>
     <div class="testimonial-content">
       <div class="quote-mark">"</div>
-  <p class="quote-text">Imaya Interiors transformed our Mumbai flat into a calm, functional home — the team understood our routines and local climate.</p>
-  <p class="quote-author">— Asha Kapoor, Mumbai</p>
+  <p class="quote-text">Imaya Interiors transformed our flat into a calm, functional home — the team understood our routines and local climate.</p>
+  <p class="quote-author">— Asha Kapoor</p>
     </div>
   </section>
 
@@ -640,6 +658,10 @@
       <div class="form-group">
         <label class="form-label" for="location">Location</label>
         <input class="form-input" type="text" id="location" placeholder="City, State"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-input" id="message" placeholder="Tell us about your project" rows="4" style="resize:vertical"></textarea>
       </div>
       <button class="btn-submit" onclick="handleSubmit()">Send Enquiry</button>
       <p class="form-note" id="form-msg"></p>
@@ -674,7 +696,7 @@
       <div class="footer-col">
         <div class="footer-col-title">Connect</div>
         <ul>
-          <li><a href="#">Instagram</a></li>
+          <li><a id="footerInstagram" href="https://www.instagram.com/imayainteriors?igsh=MnR3ZzJkemx0ZWxj" target="_blank" rel="noopener noreferrer"><svg class="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="currentColor"/><path d="M7 7h10v10H7z" fill="#fff"/></svg>Instagram</a></li>
           <li><a href="#">Pinterest</a></li>
           <li><a href="#">LinkedIn</a></li>
           <li><a href="#">Newsletter</a></li>
@@ -686,6 +708,18 @@
       <span>Images via Unsplash (CC0)</span>
     </div>
   </footer>
+
+  <!-- APP OPEN POPUP -->
+  <div class="app-open-overlay" id="appOpen">
+    <div class="app-open" role="dialog" aria-modal="true" aria-labelledby="appOpenTitle">
+      <div style="font-size:1.2rem;font-weight:700;">Open Imaya Interiors on Instagram</div>
+      <p id="appOpenTitle">Continue to our Instagram profile for more photos and stories.</p>
+      <div>
+        <a id="openInstagram" class="btn btn-open" href="#">Open Link</a>
+        <button id="dismissAppOpen" class="btn btn-continue">Continue on site</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Nav scroll
@@ -714,20 +748,30 @@
       const email    = document.getElementById('email').value.trim();
       const phone    = document.getElementById('phone').value.trim();
       const location = document.getElementById('location').value.trim();
-      const msg      = document.getElementById('form-msg');
-      if (!name || !email || !phone || !location) {
-        msg.style.color = '#e08080';
-        msg.textContent = 'Please fill in all fields.';
+      const message  = document.getElementById('message')?.value.trim() || '';
+      const msgEl    = document.getElementById('form-msg');
+      if (!name || !email || !phone || !location || !message) {
+        msgEl.style.color = '#e08080';
+        msgEl.textContent = 'Please fill in all fields.';
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        msg.style.color = '#e08080';
-        msg.textContent = 'Please enter a valid email address.';
+        msgEl.style.color = '#e08080';
+        msgEl.textContent = 'Please enter a valid email address.';
         return;
       }
-      msg.style.color = 'var(--clay)';
-      msg.textContent = "✓ Thank you! We'll be in touch within 24 hours.";
-      ['name','email','phone','location'].forEach(id => document.getElementById(id).value = '');
+
+      // Build mailto fallback
+      const to = 'hello@imayainteriors.in';
+      const subject = encodeURIComponent(`Enquiry from ${name} — ${location}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\n\nMessage:\n${message}`);
+      const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+      // Open user's email client
+      window.location.href = mailto;
+
+      msgEl.style.color = 'var(--clay)';
+      msgEl.textContent = "✓ Thank you! Your email client should open — we'll follow up within 24 hours.";
+      ['name','email','phone','location','message'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     }
 
     // Scroll reveal
@@ -737,6 +781,32 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+  </script>
+
+  <script>
+    // App-open popup behavior
+    const appOpen = document.getElementById('appOpen');
+    const openInstagram = document.getElementById('openInstagram');
+    const dismissAppOpen = document.getElementById('dismissAppOpen');
+    const instagramUrl = 'https://www.instagram.com/imayainteriors?igsh=MnR3ZzJkemx0ZWxj';
+
+    // Show popup after small delay if user hasn't interacted
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        appOpen.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }, 600);
+    });
+
+    openInstagram.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(instagramUrl, '_blank', 'noopener');
+      appOpen.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    dismissAppOpen.addEventListener('click', () => { appOpen.classList.remove('open'); document.body.style.overflow = ''; });
+    // Also make footer instagram link open in new tab (already set), but ensure it triggers no popup
+    document.getElementById('footerInstagram').addEventListener('click', () => { appOpen.classList.remove('open'); document.body.style.overflow = ''; });
   </script>
 
   

@@ -185,6 +185,13 @@
     }
     .about-content { padding: 5rem 4.5rem; display: flex; flex-direction: column; justify-content: center; }
     .about-content p { margin-top: 1.4rem; font-size: .92rem; line-height: 1.85; color: var(--warm-gray); max-width: 420px; }
+    /* Make all headings inside the 'Who we are' block the same size */
+    .about-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 300;
+      margin-top: 1.6rem;
+    }
     .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
     .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--charcoal); }
     .stat-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--warm-gray); margin-top: .2rem; }
@@ -664,7 +671,7 @@
 
       <div class="testimonial-item active">
         <p class="quote-text">Imaya Interiors transformed our flat into a calm, functional home — the team understood our routines and local climate.</p>
-        <p class="quote-author">— Asha Kapoor</p>
+    <p class="quote-author">— Hanika</p>
       </div>
 
       <div class="testimonial-item">
